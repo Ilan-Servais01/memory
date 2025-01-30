@@ -189,7 +189,7 @@ function App() {
 
 
 
-  const API_URL = "https://memory-backend-production.up.railway.app"; // URL Railway
+  const API_URL = "https://memory-9c6b.onrender.com"; // URL de l'API backend sur Render
 
   // Charger les scores depuis l'API MySQL
   const fetchScores = async () => {
