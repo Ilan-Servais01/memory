@@ -18,6 +18,17 @@ db.connect(err => {
     console.log("✅ Connecté à MySQL !");
 });
 
+// ✅ Gérer la reconnexion automatique si la connexion est perdue
+db.on('error', err => {
+    console.error("⚠️ Erreur MySQL détectée :", err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        console.log("🔄 Reconnexion à MySQL...");
+        db.connect();
+    } else {
+        throw err;
+    }
+});
+
 db.query("SHOW TABLES;", (err, results) => {
     if (err) {
         console.error("❌ ERREUR MySQL lors de la vérification des tables :", err);
