@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // 🔥 Obligatoire pour traiter les requêtes JSON
 
-// 🌟 Connexion à MySQL
+// 📌 Connexion à MySQL
 const db = mysql.createConnection(process.env.DATABASE_URL);
 
 db.connect(err => {
@@ -18,7 +18,7 @@ db.connect(err => {
     console.log("✅ Connecté à MySQL !");
 });
 
-// 🌟 Récupérer les scores
+// 📌 Récupérer les scores
 app.get('/scores', (req, res) => {
     console.log("🔍 Nouvelle requête GET /scores reçue !");
     db.query('SELECT * FROM leaderboard ORDER BY time ASC', (err, results) => {
@@ -31,7 +31,7 @@ app.get('/scores', (req, res) => {
     });
 });
 
-// 🌟 Ajouter un score
+// 📌 Ajouter un score
 app.post('/scores', (req, res) => {
     const { playerName, time, numPairs } = req.body;
     if (!playerName || !time || !numPairs) {
@@ -51,9 +51,13 @@ app.post('/scores', (req, res) => {
     );
 });
 
-// 🌟 Lancer le serveur
+// 📌 Lancer le serveur avec le bon binding + timeout
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+
+const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Serveur en ligne sur le port ${PORT}`);
-    console.log(`🌍 API accessible sur : http://localhost:${PORT}`);
 });
+
+// 🔥 Fix du problème Render 502 Bad Gateway
+server.keepAliveTimeout = 120000;  // 120 secondes
+server.headersTimeout = 120000;    // 120 secondes
