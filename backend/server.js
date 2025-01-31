@@ -8,14 +8,7 @@ app.use(cors());
 app.use(express.json()); // 🔥 Obligatoire pour traiter les requêtes JSON
 
 // 🌟 Connexion à MySQL
-const db = mysql.createConnection({
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    port: process.env.DATABASE_PORT,
-    connectTimeout: 10000 // Timeout pour éviter que ça bloque
-});
+const db = mysql.createConnection(process.env.DATABASE_URL);
 
 db.connect(err => {
     if (err) {
