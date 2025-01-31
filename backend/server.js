@@ -55,4 +55,5 @@ app.post('/scores', (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`🚀 Serveur en ligne sur le port ${PORT}`);
+    console.log(`🌍 API accessible sur : http://localhost:${PORT}`);
 });
