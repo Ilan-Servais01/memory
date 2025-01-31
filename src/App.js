@@ -188,7 +188,7 @@ function App() {
   };
 
 
-
+  // Mise à jour API Render
   const API_URL = "https://memory-9c6b.onrender.com"; // URL de l'API backend sur Render
 
   // Charger les scores depuis l'API MySQL
