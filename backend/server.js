@@ -18,6 +18,14 @@ db.connect(err => {
     console.log("✅ Connecté à MySQL !");
 });
 
+db.query("SHOW TABLES;", (err, results) => {
+    if (err) {
+        console.error("❌ ERREUR MySQL lors de la vérification des tables :", err);
+    } else {
+        console.log("📂 Tables présentes dans MySQL :", results);
+    }
+});
+
 // 📌 Récupérer les scores
 app.get('/scores', (req, res) => {
     console.log("🔍 Nouvelle requête GET /scores reçue !");
