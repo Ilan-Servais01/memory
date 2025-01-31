@@ -5,18 +5,25 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // 🔥 Obligatoire pour traiter les requêtes JSON
 
-// Connexion à MySQL
-const db = mysql.createConnection(process.env.DATABASE_URL);
+app.post("/scores", async (req, res) => {
+    const { playerName, time, numPairs } = req.body;
 
-db.connect((err) => {
-    if (err) {
-        console.error('❌ Erreur de connexion MySQL :', err);
-        return;
+    if (!playerName || !time || !numPairs) {
+        return res.status(400).json({ error: "Données manquantes" });
     }
-    console.log('🚀 Connecté à MySQL sur Railway !');
+
+    try {
+        const sql = "INSERT INTO leaderboard (playerName, time, numPairs) VALUES (?, ?, ?)";
+        await db.query(sql, [playerName, time, numPairs]);
+        res.status(201).json({ message: "Score ajouté !" });
+    } catch (error) {
+        console.error("Erreur SQL :", error);
+        res.status(500).json({ error: "Erreur serveur" });
+    }
 });
+
 
 // Récupérer les scores
 app.get('/scores', (req, res) => {
