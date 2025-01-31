@@ -41,23 +41,28 @@ app.get('/scores', (req, res) => {
 
 // 📌 Ajouter un score
 app.post('/scores', (req, res) => {
+    console.log("📥 Requête POST reçue avec les données :", req.body);
+    
     const { playerName, time, numPairs } = req.body;
     if (!playerName || !time || !numPairs) {
+        console.error("❌ Données invalides reçues :", req.body);
         return res.status(400).json({ error: 'Données invalides' });
     }
+    
     db.query(
         'INSERT INTO leaderboard (playerName, time, numPairs) VALUES (?, ?, ?)',
         [playerName, time, numPairs], 
         (err, result) => {
             if (err) {
-                console.error('❌ Erreur SQL :', err);
+                console.error('❌ Erreur SQL lors de l’INSERT :', err);
                 return res.status(500).json({ error: 'Erreur serveur' });
             }
-            console.log(`✅ Score ajouté : ${playerName}, Temps: ${time}, Paires: ${numPairs}`);
+            console.log(`✅ Score ajouté en base : ${playerName}, Temps: ${time}, Paires: ${numPairs}`);
             res.json({ success: true, id: result.insertId });
         }
     );
 });
+
 
 // 📌 Lancer le serveur avec le bon binding + timeout
 const PORT = process.env.PORT || 5000;
