@@ -20,12 +20,13 @@ db.connect(err => {
 
 // 🌟 Récupérer les scores
 app.get('/scores', (req, res) => {
+    console.log("🔍 Nouvelle requête GET /scores reçue !");
     db.query('SELECT * FROM leaderboard ORDER BY time ASC', (err, results) => {
         if (err) {
             console.error('❌ Erreur SQL :', err);
             return res.status(500).json({ error: 'Erreur serveur' });
         }
-        console.log("📊 Scores récupérés :", results);
+        console.log("✅ Scores récupérés avec succès :", results);
         res.json(results);
     });
 });
