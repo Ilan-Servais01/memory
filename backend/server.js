@@ -40,12 +40,12 @@ db.query("SHOW TABLES;", (err, results) => {
 // 📌 Récupérer les scores
 app.get('/scores', (req, res) => {
     console.log("🔍 Nouvelle requête GET /scores reçue !");
-    db.query('SELECT * FROM leaderboard ORDER BY time ASC', (err, results) => {
+    db.query('SELECT 1 AS test', (err, results) => {
         if (err) {
-            console.error('❌ Erreur SQL :', err);
+            console.error('❌ Erreur SQL (test) :', err);
             return res.status(500).json({ error: 'Erreur serveur' });
         }
-        console.log("✅ Scores récupérés avec succès :", results);
+        console.log("✅ Test SQL réussi :", results);
         res.json(results);
     });
 });
