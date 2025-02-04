@@ -83,5 +83,5 @@ const server = app.listen(PORT, '0.0.0.0', () => {
 });
 
 // 🔥 Fix du problème Render 502 Bad Gateway
-server.keepAliveTimeout = 120000;  // 120 secondes
-server.headersTimeout = 120000;    // 120 secondes
+server.keepAliveTimeout = 180000;  // 120 secondes
+server.headersTimeout = 180000;    // 120 secondes
